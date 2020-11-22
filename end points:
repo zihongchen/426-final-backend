@@ -1,0 +1,12 @@
+end points:
+
+
+
+GET  /meetings     // get all comfirmed meetings
+GET /meetings/<Alumni name> // get all meetings of alumni
+GET /time_slots/<Alumni name> // get all time_slots of alumni
+
+
+PUT /meetings/addTimeSlot // for alumni to add a time slot
+PUT /meetings/confirmTimeSlot/<time slot ID>
+PUT /meetings/bookTimeSlot/<time slot ID>
