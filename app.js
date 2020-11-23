@@ -1,3 +1,4 @@
+const PORT = process.env.PORT || 5000
 const express = require('express') // gets up the package
 const app = express()
 const mongoose = require('mongoose') // username: VincentDB, password: Vincent2020
@@ -51,4 +52,4 @@ mongoose.connect(
 
 //How to start listening 
 
-app.listen(0)
+app.listen(PORT)
