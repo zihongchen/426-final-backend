@@ -28,6 +28,7 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
     "fetch": "^1.1.0",
+    "heroku": "^7.47.3",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",

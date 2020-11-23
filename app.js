@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 
 
 
+
 //Import Routes
 const postsRoute = require(`./routes/posts`)
 const meetingRoute = require(`./routes/meetings.js`)
@@ -50,4 +51,4 @@ mongoose.connect(
 
 //How to start listening 
 
-app.listen(3001)
+app.listen(0)
