@@ -82,7 +82,8 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
         new_time_slot.AlumniToMeet = {
             alumni_id: currentClient._id,
             first_name: currentClient.first_name,
-            last_name: currentClient.last_name
+            last_name: currentClient.last_name,
+            email: currentClient.email
         }
         //##########################
         const updatedTimeSlot = await Users.updateOne({
@@ -168,11 +169,19 @@ router.patch('/bookTimeSlot/:slot_id', verifyUser, async (req, res) => {
     })
     
     try {
+        const StudentToMeet = {
+            student_id:currentClient._id,
+            email:currentClient.email,
+            first_name: currentClient.first_name,
+            last_name: currentClient.last_name
+        }
+
         const updatedTimeSlot = await Users.update({
             "time_slot.slot_id": req.params.slot_id,
         }, {
             $set: {
-                "time_slot.$.is_booked": true
+                "time_slot.$.is_booked": true,
+                "time_slot.$.studentToMeet" : StudentToMeet
             }
 
         })

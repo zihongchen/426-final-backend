@@ -65,6 +65,9 @@ const UserSchema = mongoose.Schema({
             alumni_id: {
                 type: String
             },
+            email: {
+                type: String
+            },
             first_name: {
                 type: String
             },
