@@ -64,11 +64,11 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
     const currentClient = await Users.findOne({
         "_id": userInfo._id
     })
-    if (!currentClient.is_alumni) return res.status(400).send("Only alumni could add a time slot")
+    if (!currentClient.is_alumni) return res.send("Only alumni could add a time slot")
 
     try {
         if (!req.body.start_time) {
-            return res.status(400).send("Start time of the meeting must not be empty")
+            return res.send("Start time of the meeting must not be empty")
         }
         // CREATE A NEWS TIME SLOT
         const new_time_slot = {}
@@ -106,7 +106,7 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
     const currentClient = await Users.findOne({
         "_id": userInfo._id
     })
-    if (!currentClient.is_alumni) return res.status(400).send("Only alumni could confirm a time slot")
+    if (!currentClient.is_alumni) return res.send("Only alumni could confirm a time slot")
 
     try {
         const updatedTimeSlot = await Users.update({
@@ -135,7 +135,7 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
     const currentClient = await Users.findOne({
         "_id": userInfo._id
     })
-    if (!currentClient.is_alumni) return res.status(400).send("Only alumni could delete a time slot")
+    if (!currentClient.is_alumni) return res.send("Only alumni could delete a time slot")
 
     try {
         const removedPost = await Users.update({},
