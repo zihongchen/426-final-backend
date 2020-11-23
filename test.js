@@ -17,11 +17,8 @@ const axios = require('axios')
 //     .catch(error => console.log(error))
 // }
 
-// (async () => {
 
-    
-// })();
-let url = "url: 'http://localhost:3001/auth/login'"
+let url = "http://localhost:3001/alumni"
 let test = async ()=>{
     //const res = axios.get('http://localhost:3001/alumni');
     
@@ -37,7 +34,7 @@ let test = async ()=>{
           "email" : "Broscience@gmail.com"
         }
     }).then(res => {
-        console.log(res.body)
+        console.log(res)
     })
     .catch(error => console.log(error))
 

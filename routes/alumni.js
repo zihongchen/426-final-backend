@@ -5,7 +5,7 @@ const verifyUser = require('./verifyToken.js')
 const mongoose = require('mongoose')
 
 //GET 
-router.get('/', verifyUser, async (req, res) => {
+router.get('/',  async (req, res) => {
     try {
         const posts = await Users.find({
             "is_alumni": "true"
