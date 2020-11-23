@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 5039
+const PORT = process.env.PORT || 3000
 const express = require('express') // gets up the package
 const app = express()
 const mongoose = require('mongoose') // username: VincentDB, password: Vincent2020

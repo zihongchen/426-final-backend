@@ -112,12 +112,10 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
 
     try {
         const updatedTimeSlot = await Users.update({
-            "_id": userInfo._id,
-        }, {
-            slot_id: req.params.slot_id
+            "time_slot.slot_id": req.params.slot_id,
         }, {
             $set: {
-                is_confirmed: true
+                "time_slot.$.is_confirmed": true
             }
 
         })
@@ -161,5 +159,30 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
 })
 
 
+
+// for alumni to confirm a time slot
+router.patch('/bookTimeSlot/:slot_id', verifyUser, async (req, res) => {
+    const userInfo = req.user
+    const currentClient = await Users.findOne({
+        "_id": userInfo._id
+    })
+    
+    try {
+        const updatedTimeSlot = await Users.update({
+            "time_slot.slot_id": req.params.slot_id,
+        }, {
+            $set: {
+                "time_slot.$.is_booked": true
+            }
+
+        })
+        res.json(updatedTimeSlot)
+    } catch (err) {
+        res.json({
+            message: err
+        })
+    }
+
+})
 
 module.exports = router
