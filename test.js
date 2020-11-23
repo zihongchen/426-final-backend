@@ -1,5 +1,5 @@
 // // const fetch = require("node-fetch");
-// const axios = require('axios')
+ const axios = require('axios')
 
 // // let a = async function(){
 // //     const result = await fetch({
@@ -59,17 +59,17 @@
 
 // // test()
 
-const axios = require('axios');
 
-// httpbin.org gives you the headers in the response
-// body `res.data`.
-// See: https://httpbin.org/#/HTTP_Methods/get_get
-const a = async ()=>{
-    const res = await axios.get('https://comp426-final-backend.herokuapp.com/meetings/myMeetings', {
-        headers: {
-          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJiNWQ3NjMxZjEzYzEwZGQ0MTZlYjMiLCJpYXQiOjE2MDYxMjAwOTksImV4cCI6MTYwNjEzODA5OX0.y41PNfQTS53hwVMBy4Hlr4HhL2OK_rONby0RxmFPs5c'
-        }
-      });
-    console.log(res)
+
+var auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJiNWQ3NjMxZjEzYzEwZGQ0MTZlYjMiLCJpYXQiOjE2MDYxMjAwOTksImV4cCI6MTYwNjEzODA5OX0.y41PNfQTS53hwVMBy4Hlr4HhL2OK_rONby0RxmFPs5c'
+const handleBook = async function(){
+
+  
+  const res = await axios.patch('http://localhost:3000/meetings/bookTimeSlot/5fbb7543c8fe4918f0bc604d', {
+     
+  }).catch(error => {
+      console.log(error);
+  })
 }
-a()
+
+handleBook()
