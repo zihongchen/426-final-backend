@@ -47,7 +47,7 @@ const UserSchema = mongoose.Schema({
             default: false
         },
 
-        studentToMeet: {
+        StudentToMeet: {
             student_id: {
                 type: String
             },
