@@ -18,7 +18,7 @@ const axios = require('axios')
 // }
 
 
-let url = "https://shrouded-reaches-20571.herokuapp.com/"
+let url = "http://localhost:5000/alumni"
 let test = async ()=>{
     //const res = axios.get('http://localhost:3001/alumni');
     
