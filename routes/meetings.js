@@ -35,16 +35,13 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
     })
 
     try {
-        const updatedTimeSlot = await Users.findOne(
-            {
-                $or:[
-                    {
-                    "time_slot.AlumniToMeet.alumni_id": userInfo._id
-                }, {
-                    "time_slot.StudentToMeet.student_id": userInfo._id
-                } ]
-            }
-        )
+        const updatedTimeSlot = await Users.findOne({
+            $or: [{
+                "time_slot.AlumniToMeet.alumni_id": userInfo._id
+            }, {
+                "time_slot.StudentToMeet.student_id": userInfo._id
+            }]
+        })
         res.json(updatedTimeSlot)
     } catch (err) {
         res.json({
@@ -133,6 +130,7 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
 
 // for alumni to cancel a time slot
 router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
+
     const userInfo = req.user
     const currentClient = await Users.findOne({
         "_id": userInfo._id
@@ -140,14 +138,8 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.status(400).send("Only alumni could delete a time slot")
 
     try {
-        const removedPost = await Users.update( 
-            {
-            $pull: {
-                time_slot: {
-                    slot_id: req.params.slot_id
-                }
-            }
-        })
+        const removedPost = await Users.update({},
+            {$pull: {time_slot:{slot_id : req.params.slot_id}}})
         res.json(removedPost)
     } catch (err) {
         res.json({
@@ -165,11 +157,11 @@ router.patch('/bookTimeSlot/:slot_id', verifyUser, async (req, res) => {
     const currentClient = await Users.findOne({
         "_id": userInfo._id
     })
-    
+
     try {
         const StudentToMeet = {
-            student_id:currentClient._id,
-            email:currentClient.email,
+            student_id: currentClient._id,
+            email: currentClient.email,
             first_name: currentClient.first_name,
             last_name: currentClient.last_name
         }
@@ -179,7 +171,7 @@ router.patch('/bookTimeSlot/:slot_id', verifyUser, async (req, res) => {
         }, {
             $set: {
                 "time_slot.$.is_booked": true,
-                "time_slot.$.studentToMeet" : StudentToMeet
+                "time_slot.$.StudentToMeet": StudentToMeet
             }
 
         })
