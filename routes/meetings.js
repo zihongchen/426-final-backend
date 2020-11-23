@@ -5,7 +5,7 @@ const verifyUser = require('./verifyToken.js')
 const mongoose = require('mongoose')
 
 //GET ALL MEETINGS
-router.get('/', verifyUser, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const posts = await Users.find({
             "is_alumni": "true"
@@ -70,6 +70,9 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.status(400).send("Only alumni could add a time slot")
 
     try {
+        if (!req.body.start_time){
+            return res.status(400).send("Start time of the meeting must not be empty")
+        }
         // CREATE A NEWS TIME SLOT
         const new_time_slot = {}
         new_time_slot.slot_id = mongoose.Types.ObjectId()
