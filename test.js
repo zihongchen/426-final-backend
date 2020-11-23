@@ -18,19 +18,19 @@ const axios = require('axios')
 // }
 
 var auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJiNWQ3NjMxZjEzYzEwZGQ0MTZlYjMiLCJpYXQiOjE2MDYxMTY3OTksImV4cCI6MTYwNjEyMDM5OX0.ViSGD99Xv-KEXq5fIJC4s2dLDD8o3NcW-v5189uLRaE'
-
-axios.get('https://comp426-final-backend.herokuapp.com/meetings/addTimeSlot',    
-    {
-    method: 'get',
+let url = "https://comp426-final-backend.herokuapp.com/meetings/addTimeSlot"
+let config = {
     headers: {
         'anth-token': auth_token,
-    },
-    data:{
-        "start_time": "1995-12-17T08:24:00.000Z"
     }
-    }).then(response => {
-            return response.data
-        })
+}
+let body = {
+    "start_time": "1995-12-17T08:24:00.000Z"
+}
+
+axios.patch(url, body, config).then(response => {
+    console.log(response)
+})
 
 
 

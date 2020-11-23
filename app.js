@@ -16,11 +16,13 @@ const postsRoute = require(`./routes/posts`)
 const meetingRoute = require(`./routes/meetings.js`)
 const registerRoute = require(`./routes/auth.js`)
 const alumniRoute = require(`./routes/alumni.js`)
+const userRoute = require(`./routes/users.js`)
 
 
 //MIDDLEWARE FUNCITONS
 app.use('/auth',registerRoute)
 
+app.use('/users', userRoute)
 
 app.use('/posts', postsRoute)
 app.use('/meetings', meetingRoute)
