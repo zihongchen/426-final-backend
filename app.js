@@ -11,16 +11,18 @@ app.use(bodyParser.json())
 
 //Import Routes
 const postsRoute = require(`./routes/posts`)
-const userRoute = require(`./routes/users.js`)
+const meetingRoute = require(`./routes/meetings.js`)
 const registerRoute = require(`./routes/auth.js`)
+const alumniRoute = require(`./routes/alumni.js`)
+
 
 //MIDDLEWARE FUNCITONS
 app.use('/auth',registerRoute)
 
 
 app.use('/posts', postsRoute)
-app.use('/users', userRoute)
-
+app.use('/meetings', meetingRoute)
+app.use('/alumni', alumniRoute)
 
 
 

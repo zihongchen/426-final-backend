@@ -7,7 +7,13 @@ const verifyUser = require('./verifyToken.js')
 //GET BACK ALL THE POSTS 
 router.get('/', verifyUser, async (req, res) => {
     try {
-        const posts = await Users.find()
+        const posts = await Users.find({
+        
+        })
+        const userInfo = req.user
+        const specificUser = await Users.find({
+            "_id" : userInfo._id
+        })
         res.json(posts)
     } catch (err) {
         res.json({

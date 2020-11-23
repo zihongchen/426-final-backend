@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zihongchen/426-final-backend#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
@@ -29,6 +30,7 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",

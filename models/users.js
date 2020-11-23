@@ -30,6 +30,11 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     time_slot: [{
+        slot_id :{
+            type: String,
+            required: true,
+            unique: true
+        },
         start_time: {
             type: Date
         },
@@ -37,6 +42,11 @@ const UserSchema = mongoose.Schema({
             type: Boolean,
             default: false
         },
+        is_confirmed: {
+            type: Boolean,
+            default: false
+        },
+
         studentToMeet: {
             email: {
                 type: String
@@ -48,6 +58,15 @@ const UserSchema = mongoose.Schema({
                 type: String
             }
         },
+        AlumniToMeet:{
+            alumni_id: {type: String},
+            first_name: {
+                type: String
+            },
+            last_name: {
+                type: String
+            }
+        }
     }]
 
 
