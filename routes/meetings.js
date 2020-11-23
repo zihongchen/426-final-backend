@@ -35,16 +35,16 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
     })
 
     try {
-        const updatedTimeSlot = await Users.find({
-            time_slot: {
-                studentToMeet: {
-                    student_id: userInfo._id
-                },
-                AlumniToMeet: {
-                    alumni_id: userInfo._id
-                }
-            }
-        })
+        const updatedTimeSlot = await Users.findOne(
+            {
+                $or:[
+                    {
+                    "time_slot.AlumniToMeet.alumni_id": userInfo._id
+                }, {
+                    "time_slot.studentToMeet.student_id": userInfo._id
+                } ]
+            },{time_slot:1}
+        )
         res.json(updatedTimeSlot)
     } catch (err) {
         res.json({
@@ -70,7 +70,7 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.status(400).send("Only alumni could add a time slot")
 
     try {
-        if (!req.body.start_time){
+        if (!req.body.start_time) {
             return res.status(400).send("Start time of the meeting must not be empty")
         }
         // CREATE A NEWS TIME SLOT
