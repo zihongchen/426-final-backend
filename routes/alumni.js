@@ -5,7 +5,7 @@ const verifyUser = require('./verifyToken.js')
 const mongoose = require('mongoose')
 
 //GET 
-router.get('/',  async (req, res) => {
+router.get('/', verifyUser, async (req, res) => {
     try {
         const posts = await Users.find({
             "is_alumni": "true"
@@ -115,8 +115,6 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
                     }
                 }
             }
-
-
         )
         res.json(removedPost)
     } catch (err) {

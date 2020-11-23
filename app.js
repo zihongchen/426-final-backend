@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 5032
+const PORT = process.env.PORT || 5039
 const express = require('express') // gets up the package
 const app = express()
 const mongoose = require('mongoose') // username: VincentDB, password: Vincent2020
@@ -32,8 +32,8 @@ app.use('/alumni', alumniRoute)
 
 
 //Routes
-app.get('/specifc', (req, res) => {
-    res.send("this is home")
+app.get('/', (req, res) => {
+    res.send("this is home of comp426 backend")
 })
 
 

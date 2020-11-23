@@ -18,28 +18,17 @@ const axios = require('axios')
 // }
 
 
-let url = "http://localhost:5000/alumni"
+let url = "https://comp426-final-backend.herokuapp.com/auth/register"
 let test = async ()=>{
     //const res = axios.get('http://localhost:3001/alumni');
     
-    const result = await axios.get(url,
-        
-        {
-        method: 'get',
-        //TODO: change add backend @zihongchen
-
-        withCredentials: true,
-        data: {
-          "password" :"helloWorld",
-          "email" : "Broscience@gmail.com"
-        }
-    }).then(res => {
-        console.log(res)
-    })
-    .catch(error => console.log(error))
+    const result = await axios.post(url, {
+        firstName: 'Fred',
+        lastName: 'Flintstone'
+      })
 
 
-    console.log("hello")
+    console.log(result)
     
 }
 
