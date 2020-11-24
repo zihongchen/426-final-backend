@@ -35,29 +35,46 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
     })
 
     try {
-        const updatedTimeSlot = await Users.findOne({
+        let updatedTimeSlot = await Users.findOne({
             $or: [{
                 "time_slot.AlumniToMeet.alumni_id": userInfo._id
             }, {
                 "time_slot.StudentToMeet.student_id": userInfo._id
             }]
         })
-        if (updatedTimeSlot == null) {
-            const noTimeSlotResponse = {
-                email: currentClient.email,
-                first_name: currentClient.first_name,
-                last_name: currentClient.last_name,
-                is_alumni: currentClient.is_alumni,
-                time_slot: {}
-            }
-            return res.json(noTimeSlotResponse)
+        let studentTime = []
+        if (currentClient.is_alumni == false && updatedTimeSlot != null) {
+            updatedTimeSlot.email= currentClient.email
+            updatedTimeSlot.first_name = currentClient.first_name
+            updatedTimeSlot.last_name = currentClient.last_name
+            updatedTimeSlot. is_alumni =  false 
+            
+            for(let i = 0; i < updatedTimeSlot.time_slot.length; i ++){
+                if(updatedTimeSlot.time_slot[i].StudentToMeet.student_id == userInfo._id){
+                    studentTime.push(updatedTimeSlot.time_slot[i])
+                }
+            }   
+            updatedTimeSlot.time_slot = studentTime
+        }
+
+           
+
+    if (updatedTimeSlot == null) {
+        updatedTimeSlot = {
+            email: currentClient.email,
+            first_name: currentClient.first_name,
+            last_name: currentClient.last_name,
+            is_alumni: currentClient.is_alumni,
+            time_slot: []
         }
         return res.json(updatedTimeSlot)
-    } catch (err) {
-        res.json({
-            message: err
-        })
     }
+    return res.json(updatedTimeSlot)
+} catch (err) {
+    res.json({
+        message: err
+    })
+}
 
 })
 
@@ -163,9 +180,15 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.send("Only alumni could delete a time slot")
 
     try {
-        const removedPost = await Users.update({}, 
-            {$pull: {time_slot: {slot_id: req.params.slot_id} }},
-            {multi:true})
+        const removedPost = await Users.update({}, {
+            $pull: {
+                time_slot: {
+                    slot_id: req.params.slot_id
+                }
+            }
+        }, {
+            multi: true
+        })
 
 
         // const updatedTimeSlot = await Users.update({
