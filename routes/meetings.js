@@ -121,7 +121,7 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
         })
         const time_slot = await Users.findOne({
             "time_slot.slot_id": req.params.slot_id,
-        }
+        })
         ///////////////////////////////// ADD THE EMAIL API HERE
         const email1 = time_slot.AlumniToMeet.email
         const email2 = time_slot.StudentToMeet.email
