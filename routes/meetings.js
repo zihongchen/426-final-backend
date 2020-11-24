@@ -39,11 +39,7 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
             return res.json(currentClient)
         }
         let updatedTimeSlot = await Users.findOne({
-            $or: [{
-                "time_slot.AlumniToMeet.alumni_id": userInfo._id
-            }, {
-                "time_slot.StudentToMeet.student_id": userInfo._id
-            }]
+            "time_slot.StudentToMeet.student_id": userInfo._id
         })
 
     if (updatedTimeSlot == null) {
