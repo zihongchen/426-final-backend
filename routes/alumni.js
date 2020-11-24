@@ -59,7 +59,7 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
     } catch (err) {
         res.json({
             message: err
-        })
+        })　　
     }
 
 })
