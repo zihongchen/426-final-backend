@@ -42,11 +42,11 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
                 "time_slot.StudentToMeet.student_id": userInfo._id
             }]
         })
-        if(updatedTimeSlot == null){
+        if (updatedTimeSlot == null) {
             const noTimeSlotResponse = {
-                email:currentClient.email,
-                first_name:currentClient.first_name,
-                last_name:currentClient.last_name,
+                email: currentClient.email,
+                first_name: currentClient.first_name,
+                last_name: currentClient.last_name,
                 is_alumni: currentClient.is_alumni,
                 time_slot: {}
             }
@@ -163,8 +163,19 @@ router.delete('/cancelTimeSlot/:slot_id', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.send("Only alumni could delete a time slot")
 
     try {
-        const removedPost = await Users.update({},
-            {$pull: {time_slot:{slot_id : req.params.slot_id}}})
+        const removedPost = await Users.update({}, 
+            {$pull: {time_slot: {slot_id: req.params.slot_id} }},
+            {multi:true})
+
+
+        // const updatedTimeSlot = await Users.update({
+        //     "time_slot.slot_id": req.params.slot_id,
+        // }, {
+        //     $pull: {
+        //         "time_slot.$.slot_id": req.params.slot_id
+        //     }
+
+        // })    
         res.json(removedPost)
     } catch (err) {
         res.json({
