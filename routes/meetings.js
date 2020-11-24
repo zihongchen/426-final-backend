@@ -102,6 +102,7 @@ router.patch('/addTimeSlot', verifyUser, async (req, res) => {
 
 // for alumni to confirm a time slot
 router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
+
     const userInfo = req.user
     const currentClient = await Users.findOne({
         "_id": userInfo._id
@@ -109,6 +110,7 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
     if (!currentClient.is_alumni) return res.send("Only alumni could confirm a time slot")
 
     try {
+
         const updatedTimeSlot = await Users.update({
             "time_slot.slot_id": req.params.slot_id,
         }, {
@@ -117,6 +119,13 @@ router.patch('/confirmTimeSlot/:slot_id', verifyUser, async (req, res) => {
             }
 
         })
+        const time_slot = await Users.findOne({
+            "time_slot.slot_id": req.params.slot_id,
+        }
+        ///////////////////////////////// ADD THE EMAIL API HERE
+        const email1 = time_slot.AlumniToMeet.email
+        const email2 = time_slot.StudentToMeet.email
+        //////////////////////////////////
         res.json(updatedTimeSlot)
     } catch (err) {
         res.json({
