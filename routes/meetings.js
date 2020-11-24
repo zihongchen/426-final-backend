@@ -42,7 +42,17 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
                 "time_slot.StudentToMeet.student_id": userInfo._id
             }]
         })
-        res.json(updatedTimeSlot)
+        if(updatedTimeSlot == null){
+            const noTimeSlotResponse = {
+                email:currentClient.email,
+                first_name:currentClient.first_name,
+                last_name:currentClient.last_name,
+                is_alumni: currentClient.is_alumni,
+                time_slot: {}
+            }
+            return res.json(noTimeSlotResponse)
+        }
+        return res.json(updatedTimeSlot)
     } catch (err) {
         res.json({
             message: err
