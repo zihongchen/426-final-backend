@@ -35,13 +35,42 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
     })
 
     try {
-        let updatedTimeSlot = await Users.findOne({
-            $or: [{
-                "time_slot.AlumniToMeet.alumni_id": userInfo._id
-            }, {
-                "time_slot.StudentToMeet.student_id": userInfo._id
-            }]
-        })
+        if(currentClient.is_alumni){
+            return res.json(currentClient)
+        }
+
+   
+        
+        //     if (currentClient.is_alumni == true) {
+        //         let updatedTimeSlot = await Users..aggregate([
+        //             {
+        //                 "time_slot.StudentToMeet.student_id": userInfo._id
+        //             }]
+                
+
+
+        //     } else {
+        //         let updatedTimeSlot = await Users
+        //             {
+        //                 $project: {
+        //                     time_slot: {
+        //                         $filter: {
+        //                             input: "$StudentToMeet",
+        //                             as: "student",
+        //                             cond: { $eq: ["$$StudentToMeet.student_id", userInfo._id] }
+        //                         }
+        //                     }
+        //                 }
+    
+        //             }
+        //         ])
+        //     }
+
+        // let updatedTimeSlot = await Users.find(
+        //     {
+        //         time_slot: {StudentToMeet: {student_id : userInfo._id}}
+        //     }
+        // )
         let studentTime = []
         if (currentClient.is_alumni == false && updatedTimeSlot != null) {
             updatedTimeSlot.email= currentClient.email
@@ -59,7 +88,7 @@ router.get('/myMeetings', verifyUser, async (req, res) => {
 
            
 
-    if (updatedTimeSlot == null) {
+    if (!updatedTimeSlot) {
         updatedTimeSlot = {
             email: currentClient.email,
             first_name: currentClient.first_name,
@@ -218,12 +247,6 @@ router.patch('/bookTimeSlot/:slot_id', verifyUser, async (req, res) => {
     })
 
     try {
-        let onlyOneExistingSlot = await Users.findOne({
-            "time_slot.StudentToMeet.student_id": userInfo._id
-            }
-        )
-    if (onlyOneExistingSlot != null) return res.send("A student could only book one time slot.")
-    
         const StudentToMeet = {
             student_id: currentClient._id,
             email: currentClient.email,
